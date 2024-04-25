@@ -84,8 +84,10 @@
     <Compile Include="Models\Commons\SellerInfo.cs" />
     <Compile Include="Models\Commons\SummarizeInfo.cs" />
     <Compile Include="Models\Commons\TaxBreakDowns.cs" />
+    <Compile Include="Models\Requests\CancelInvoiceRequest.cs" />
     <Compile Include="Models\Requests\CreateInvoiceRequest.cs" />
     <Compile Include="Models\Requests\GetFileRequest.cs" />
+    <Compile Include="Models\Responses\CancelInvoiceRespone.cs" />
     <Compile Include="Models\Responses\CreateInvoiceResponse.cs" />
     <Compile Include="Models\Responses\PdfFileResponse.cs" />
     <Compile Include="Models\Responses\ZipFileResponse.cs" />

@@ -32,12 +32,20 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtInvoiceNo = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button7 = new System.Windows.Forms.Button();
+            this.txtTemplateCode = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtFileType = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtDirectory = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +62,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(16, 19);
+            this.button2.Location = new System.Drawing.Point(16, 132);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(93, 25);
             this.button2.TabIndex = 1;
@@ -64,12 +72,13 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(115, 19);
+            this.button3.Location = new System.Drawing.Point(115, 132);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(93, 25);
             this.button3.TabIndex = 2;
-            this.button3.Text = "Get Zip File";
+            this.button3.Text = "Get PDF File";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // groupBox1
             // 
@@ -79,59 +88,10 @@
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(317, 99);
+            this.groupBox1.Size = new System.Drawing.Size(317, 85);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thao tác";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.button6);
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Location = new System.Drawing.Point(12, 157);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(317, 59);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Tải về";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(115, 22);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(93, 25);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Update Info";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(214, 22);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(93, 25);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "Cancel Invoice";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(214, 19);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(93, 25);
-            this.button6.TabIndex = 3;
-            this.button6.Text = "Get Zip File";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(12, 239);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(317, 100);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Tra Cứu";
             // 
             // button7
             // 
@@ -143,11 +103,132 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(214, 22);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(93, 25);
+            this.button5.TabIndex = 2;
+            this.button5.Text = "Cancel Invoice";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(115, 22);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(93, 25);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "Update Info";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.txtDirectory);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.txtFileType);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.txtTemplateCode);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.txtInvoiceNo);
+            this.groupBox2.Controls.Add(this.button6);
+            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Location = new System.Drawing.Point(12, 103);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(317, 166);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Tải về";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(33, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Invoice No:";
+            // 
+            // txtInvoiceNo
+            // 
+            this.txtInvoiceNo.Location = new System.Drawing.Point(101, 16);
+            this.txtInvoiceNo.Name = "txtInvoiceNo";
+            this.txtInvoiceNo.Size = new System.Drawing.Size(210, 20);
+            this.txtInvoiceNo.TabIndex = 4;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(214, 132);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(93, 25);
+            this.button6.TabIndex = 3;
+            this.button6.Text = "Get Zip File";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(12, 275);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(317, 117);
+            this.groupBox3.TabIndex = 5;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Tra Cứu";
+            // 
+            // txtTemplateCode
+            // 
+            this.txtTemplateCode.Location = new System.Drawing.Point(101, 42);
+            this.txtTemplateCode.Name = "txtTemplateCode";
+            this.txtTemplateCode.Size = new System.Drawing.Size(210, 20);
+            this.txtTemplateCode.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Template Code:";
+            // 
+            // txtFileType
+            // 
+            this.txtFileType.Location = new System.Drawing.Point(101, 68);
+            this.txtFileType.Name = "txtFileType";
+            this.txtFileType.Size = new System.Drawing.Size(210, 20);
+            this.txtFileType.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(42, 71);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "File Type:";
+            // 
+            // txtDirectory
+            // 
+            this.txtDirectory.Location = new System.Drawing.Point(101, 94);
+            this.txtDirectory.Name = "txtDirectory";
+            this.txtDirectory.Size = new System.Drawing.Size(210, 20);
+            this.txtDirectory.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(42, 97);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Directory:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 360);
+            this.ClientSize = new System.Drawing.Size(338, 404);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -155,6 +236,7 @@
             this.Text = "Invoice Form";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -171,6 +253,14 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtInvoiceNo;
+        private System.Windows.Forms.TextBox txtTemplateCode;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtFileType;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtDirectory;
     }
 }
 

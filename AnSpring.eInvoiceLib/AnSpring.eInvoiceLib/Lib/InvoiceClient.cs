@@ -107,6 +107,19 @@ namespace AnSpring.eInvoiceLib.Lib
             return (result, errorCode, message, responseData);
         }
 
+        /// <summary>
+        /// Hàm tải về hóa đơn
+        /// </summary>
+        /// <param name="url">Địa chỉ toàn vẹn API</param>
+        /// <param name="userName">Mã số thuế</param>
+        /// <param name="passWord">Mật khẩu</param>
+        /// <param name="requestData">Request tải file</param>
+        /// <returns>
+        /// bool: Tích hợp thành công hay thất bại
+        /// string: Mã lỗi
+        /// string: Mô tả lỗi
+        /// ZipFileResponse: Kết quả nhận được trong trường hợp thành công
+        /// </returns>
         public static (bool, string, string, ZipFileResponse) GetZipFile(
             string url, string userName, string passWord, GetFileRequest requestData)
         {
@@ -118,11 +131,13 @@ namespace AnSpring.eInvoiceLib.Lib
             {
                 string basic = CreateBasicAuthHeader(userName, passWord);
                 client.BaseAddress = new Uri(url);
-                client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                 client.DefaultRequestHeaders.Add("Authorization", basic);
 
                 // Serialize đối tượng thành chuỗi JSON
-                string jsonData = JsonConvert.SerializeObject(requestData);
+                string jsonData = JsonConvert.SerializeObject(requestData, new JsonSerializerSettings
+                {
+                    ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+                });
 
                 // Tạo HttpRequestMessage với phương thức POST và dữ liệu JSON
                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, url);
@@ -140,27 +155,11 @@ namespace AnSpring.eInvoiceLib.Lib
                     // Phân tích phản hồi JSON
                     dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
 
-                    // Kiểm tra nếu có trường "result"
-                    if (responseObject.result != null)
-                    {
-                        // Xử lý phản hồi thành công
-                        responseData = JsonConvert.DeserializeObject<ZipFileResponse>(responseObject.result.ToString());
+                    // Xử lý phản hồi thành công
+                    responseData = JsonConvert.DeserializeObject<ZipFileResponse>(responseContent);
 
-                        // Gán kết quả xử lý là true
-                        result = true;
-                    }
-                    else if (responseObject.code != null)
-                    {
-                        // Xử lý phản hồi lỗi
-                        errorCode = responseObject.code;
-                        message = responseObject.message;
-                    }
-                    else
-                    {
-                        // Phản hồi không xác định
-                        errorCode = "UNKNOWN";
-                        message = "Lỗi không xác định";
-                    }
+                    // Gán kết quả xử lý là true
+                    result = true;
                 }
                 else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -183,6 +182,21 @@ namespace AnSpring.eInvoiceLib.Lib
 
             return (result, errorCode, message, responseData);
         }
+
+        /// <summary>
+        /// Hàm hủy hóa đơn
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="userName"></param>
+        /// <param name="passWord"></param>
+        /// <param name="requestData"></param>
+        /// <returns></returns>
+        public static (bool, string, string, CancelInvoiceRespone) CancelInvoice(
+            string url, string userName, string passWord, CancelInvoiceRequest requestData)
+        {
+
+        }
+
         #region support
         static string CreateBasicAuthHeader(string username, string password)
         {

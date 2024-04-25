@@ -11,6 +11,7 @@ using AnSpring.eInvoiceLib.Models.Requests;
 using AnSpring.eInvoiceLib.Models.Commons;
 using AnSpring.eInvoiceLib.Models.Responses;
 using AnSpring.eInvoiceLib.Lib;
+using System.IO;
 
 namespace AnSpring.InvoiceForm
 {
@@ -156,7 +157,55 @@ namespace AnSpring.InvoiceForm
         /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Lấy giá trị cấu hình
+                string passWord = ConfigurationManager.AppSettings["UserPass"].ToString();
+                string userName = ConfigurationManager.AppSettings["CodeTax"].ToString();
+                string apiLink = ConfigurationManager.AppSettings["APILink"].ToString()
+                    + @"/InvoiceAPI/InvoiceUtilsWS/getInvoiceRepresentationFile";
 
+                // Khai báo đối tượng get file
+                GetFileRequest request = new GetFileRequest()
+                {
+                    SupplierTaxCode = userName,
+                    FileType = "ZIP",
+                    InvoiceNo = txtInvoiceNo.Text,
+                    TemplateCode = txtTemplateCode.Text,
+                };
+
+                (bool result, string errorCode, string message, ZipFileResponse responseData)
+                    = InvoiceClient.GetZipFile(apiLink, userName, passWord, request);
+
+                if (result)
+                {
+                    // Xử lý lưu file
+                    if (!Directory.Exists(Path.Combine(Application.StartupPath, "ZipFile")))
+                        Directory.CreateDirectory(Path.Combine(Application.StartupPath, "ZipFile"));
+                    
+                    string fileName = Path.GetFileNameWithoutExtension(responseData.FileName) + ".zip";
+                    string saveFileName = GetUniqueFileName(Path.Combine(Application.StartupPath, "ZipFile"), fileName);
+
+                    string path = Path.Combine(Application.StartupPath, "ZipFile") + "\\" + saveFileName;
+                    byte[] data = Convert.FromBase64String(responseData.FileToBytes);
+                    File.WriteAllBytes(path, data);
+
+                    // Thông báo kết quả
+                    MessageBox.Show($"Lấy file thành công: {path}", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Có lỗi xảy ra: Mã lỗi {errorCode} - Nội dung: {message}", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            catch(Exception ex )
+            {
+                MessageBox.Show($"Có lỗi xảy ra: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -178,5 +227,80 @@ namespace AnSpring.InvoiceForm
         {
 
         }
+
+        /// <summary>
+        /// Lấy file pdf
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Lấy giá trị cấu hình
+                string passWord = ConfigurationManager.AppSettings["UserPass"].ToString();
+                string userName = ConfigurationManager.AppSettings["CodeTax"].ToString();
+                string apiLink = ConfigurationManager.AppSettings["APILink"].ToString()
+                    + @"/InvoiceAPI/InvoiceUtilsWS/getInvoiceRepresentationFile";
+
+                // Khai báo đối tượng get file
+                GetFileRequest request = new GetFileRequest()
+                {
+                    SupplierTaxCode = userName,
+                    FileType = "PDF",
+                    InvoiceNo = txtInvoiceNo.Text,
+                    TemplateCode = txtTemplateCode.Text,
+                };
+
+                (bool result, string errorCode, string message, ZipFileResponse responseData)
+                    = InvoiceClient.GetZipFile(apiLink, userName, passWord, request);
+
+                if (result)
+                {
+                    // Xử lý lưu file
+                    if (!Directory.Exists(Path.Combine(Application.StartupPath, "PdfFile")))
+                        Directory.CreateDirectory(Path.Combine(Application.StartupPath, "PdfFile"));
+
+                    string fileName = Path.GetFileNameWithoutExtension(responseData.FileName) + ".pdf";
+                    string saveFileName = GetUniqueFileName(Path.Combine(Application.StartupPath, "PdfFile"), fileName);
+
+                    string path = Path.Combine(Application.StartupPath, "PdfFile") + "\\" + saveFileName;
+                    byte[] data = Convert.FromBase64String(responseData.FileToBytes);
+                    File.WriteAllBytes(path, data);
+
+                    // Thông báo kết quả
+                    MessageBox.Show($"Lấy file thành công: {path}", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Có lỗi xảy ra: Mã lỗi {errorCode} - Nội dung: {message}", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Có lỗi xảy ra: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #region Support
+        static string GetUniqueFileName(string directoryPath, string fileName)
+        {
+            string newFileName = fileName;
+            string extension = Path.GetExtension(fileName); // Lấy phần mở rộng của tên tệp
+
+            int counter = 1;
+            while (File.Exists(Path.Combine(directoryPath, newFileName))) // Kiểm tra xem tệp đã tồn tại chưa
+            {
+                newFileName = Path.GetFileNameWithoutExtension(fileName) + "_" + counter + extension; // Tăng số lên và thêm vào tên
+                counter++;
+            }
+
+            return newFileName;
+        }
+        #endregion
     }
 }
