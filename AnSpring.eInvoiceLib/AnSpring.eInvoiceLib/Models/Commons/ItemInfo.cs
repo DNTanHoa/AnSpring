@@ -7,18 +7,18 @@ namespace AnSpring.eInvoiceLib.Models.Commons
 {
     public class ItemInfo
     {
-        public string LineNumber { get; set; }
+        public int LineNumber { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string UnitName { get; set; }
-        public string UnitPrice { get; set; }
-        public string Quantity { get; set; }
-        public string ItemTotalAmountWithoutTax { get; set; }
+        public decimal? UnitPrice { get; set; }
+        public decimal? Quantity { get; set; }
+        public decimal? ItemTotalAmountWithoutTax { get; set; }
         public int TaxPercentage { get; set; }
-        public string TaxAmount { get; set; }
-        public string Discount { get; set; }
-        public string ItemDiscount { get; set; }
-        public string AdjustmentTaxAmount { get; set; }
-        public string IsIncreaseItem { get; set; }
+        public decimal? TaxAmount { get; set; }
+        public decimal? Discount { get; set; }
+        public decimal? ItemDiscount { get; set; }
+        public decimal? AdjustmentTaxAmount { get; set; }
+        public bool? IsIncreaseItem { get; set; }
     }
 }

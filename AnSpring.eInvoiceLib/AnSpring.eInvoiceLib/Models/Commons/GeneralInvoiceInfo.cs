@@ -53,25 +53,25 @@ namespace AnSpring.eInvoiceLib.Models.Commons
         /// hệ thống vẫn sẽ lưu ký hiệu hóa đơn sau khi lập là K23TAA.
         /// </summary>
         public string InvoiceSeries { get; set; }
-        public DateTime InvoiceIssuedDate { get; set; }
+        public DateTime? InvoiceIssuedDate { get; set; }
         public string CurrencyCode { get; set; }
         public string AdjustmentType { get; set; }
         public string AdjustedNote { get; set; }
         public string AdjustmentInvoiceType { get; set; }
         public string OriginalInvoiceId { get; set; }
-        public long OriginalInvoiceIssueDate { get; set; }
+        public long? OriginalInvoiceIssueDate { get; set; }
         public string AdditionalReferenceDesc { get; set; }
-        public DateTime AdditionalReferenceDate { get; set; }
-        public bool PaymentStatus { get; set; }
-        public bool CusGetInvoiceRight { get; set; }
-        public decimal ExchangeRate { get; set; }
+        public DateTime? AdditionalReferenceDate { get; set; }
+        public bool? PaymentStatus { get; set; }
+        public bool? CusGetInvoiceRight { get; set; }
+        public decimal? ExchangeRate { get; set; }
         public string TransactionUuid { get; set; }
         public string CertificateSerial { get; set; }
         public string OriginalInvoiceType { get; set; }
         public string OriginalTemplateCode { get; set; }
         public string ReservationCode { get; set; }
-        public decimal AdjustAmount20 { get; set; }
+        public decimal? AdjustAmount20 { get; set; }
         public string InvoiceNote { get; set; }
-        public decimal Validation { get; set; }
+        public decimal? Validation { get; set; }
     }
 }
