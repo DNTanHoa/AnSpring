@@ -70,7 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helper\DateTimeHelper.cs" />
+    <Compile Include="Helper\NumberHelper.cs" />
+    <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Lib\InvoiceClient.cs" />
     <Compile Include="Models\Commons\BuyerInfo.cs" />
     <Compile Include="Models\Commons\FuelReading.cs" />
@@ -87,8 +89,10 @@
     <Compile Include="Models\Requests\CancelInvoiceRequest.cs" />
     <Compile Include="Models\Requests\CreateInvoiceRequest.cs" />
     <Compile Include="Models\Requests\GetFileRequest.cs" />
+    <Compile Include="Models\Requests\LookupInvoiceRequest.cs" />
     <Compile Include="Models\Responses\CancelInvoiceRespone.cs" />
     <Compile Include="Models\Responses\CreateInvoiceResponse.cs" />
+    <Compile Include="Models\Responses\LookupInvoiceResponse.cs" />
     <Compile Include="Models\Responses\PdfFileResponse.cs" />
     <Compile Include="Models\Responses\ZipFileResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

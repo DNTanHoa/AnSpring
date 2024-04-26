@@ -53,7 +53,7 @@ namespace AnSpring.eInvoiceLib.Models.Commons
         /// hệ thống vẫn sẽ lưu ký hiệu hóa đơn sau khi lập là K23TAA.
         /// </summary>
         public string InvoiceSeries { get; set; }
-        public DateTime? InvoiceIssuedDate { get; set; }
+        public string InvoiceIssuedDate { get; set; }
         public string CurrencyCode { get; set; }
         public string AdjustmentType { get; set; }
         public string AdjustedNote { get; set; }

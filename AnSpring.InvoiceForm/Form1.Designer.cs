@@ -36,18 +36,21 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtDirectory = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtFileType = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtTemplateCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtInvoiceNo = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtTemplateCode = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtFileType = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtDirectory = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.issuedDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -62,7 +65,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(16, 132);
+            this.button2.Location = new System.Drawing.Point(115, 146);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(93, 25);
             this.button2.TabIndex = 1;
@@ -72,7 +75,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(115, 132);
+            this.button3.Location = new System.Drawing.Point(214, 146);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(93, 25);
             this.button3.TabIndex = 2;
@@ -124,6 +127,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.issuedDatePicker);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.txtDirectory);
             this.groupBox2.Controls.Add(this.label3);
@@ -132,15 +137,62 @@
             this.groupBox2.Controls.Add(this.txtTemplateCode);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txtInvoiceNo);
-            this.groupBox2.Controls.Add(this.button6);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Location = new System.Drawing.Point(12, 103);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(317, 166);
+            this.groupBox2.Size = new System.Drawing.Size(317, 188);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tải về";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(42, 97);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Directory:";
+            // 
+            // txtDirectory
+            // 
+            this.txtDirectory.Location = new System.Drawing.Point(101, 94);
+            this.txtDirectory.Name = "txtDirectory";
+            this.txtDirectory.Size = new System.Drawing.Size(210, 20);
+            this.txtDirectory.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(42, 71);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "File Type:";
+            // 
+            // txtFileType
+            // 
+            this.txtFileType.Location = new System.Drawing.Point(101, 68);
+            this.txtFileType.Name = "txtFileType";
+            this.txtFileType.Size = new System.Drawing.Size(210, 20);
+            this.txtFileType.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Template Code:";
+            // 
+            // txtTemplateCode
+            // 
+            this.txtTemplateCode.Location = new System.Drawing.Point(101, 42);
+            this.txtTemplateCode.Name = "txtTemplateCode";
+            this.txtTemplateCode.Size = new System.Drawing.Size(210, 20);
+            this.txtTemplateCode.TabIndex = 6;
             // 
             // label1
             // 
@@ -158,77 +210,50 @@
             this.txtInvoiceNo.Size = new System.Drawing.Size(210, 20);
             this.txtInvoiceNo.TabIndex = 4;
             // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(214, 132);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(93, 25);
-            this.button6.TabIndex = 3;
-            this.button6.Text = "Get Zip File";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
             // groupBox3
             // 
-            this.groupBox3.Location = new System.Drawing.Point(12, 275);
+            this.groupBox3.Controls.Add(this.button6);
+            this.groupBox3.Location = new System.Drawing.Point(12, 297);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(317, 117);
+            this.groupBox3.Size = new System.Drawing.Size(317, 53);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Tra Cứu";
             // 
-            // txtTemplateCode
+            // issuedDatePicker
             // 
-            this.txtTemplateCode.Location = new System.Drawing.Point(101, 42);
-            this.txtTemplateCode.Name = "txtTemplateCode";
-            this.txtTemplateCode.Size = new System.Drawing.Size(210, 20);
-            this.txtTemplateCode.TabIndex = 6;
+            this.issuedDatePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.issuedDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.issuedDatePicker.Location = new System.Drawing.Point(101, 120);
+            this.issuedDatePicker.MinDate = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            this.issuedDatePicker.Name = "issuedDatePicker";
+            this.issuedDatePicker.Size = new System.Drawing.Size(210, 20);
+            this.issuedDatePicker.TabIndex = 12;
             // 
-            // label2
+            // label5
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Template Code:";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(28, 126);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(67, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Issued Date:";
             // 
-            // txtFileType
+            // button6
             // 
-            this.txtFileType.Location = new System.Drawing.Point(101, 68);
-            this.txtFileType.Name = "txtFileType";
-            this.txtFileType.Size = new System.Drawing.Size(210, 20);
-            this.txtFileType.TabIndex = 8;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(42, 71);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "File Type:";
-            // 
-            // txtDirectory
-            // 
-            this.txtDirectory.Location = new System.Drawing.Point(101, 94);
-            this.txtDirectory.Name = "txtDirectory";
-            this.txtDirectory.Size = new System.Drawing.Size(210, 20);
-            this.txtDirectory.TabIndex = 10;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(42, 97);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(52, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Directory:";
+            this.button6.Location = new System.Drawing.Point(214, 19);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(93, 23);
+            this.button6.TabIndex = 0;
+            this.button6.Text = "Lookup Invoice";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 404);
+            this.ClientSize = new System.Drawing.Size(338, 358);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -237,6 +262,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -250,7 +276,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label1;
@@ -261,6 +286,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtDirectory;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker issuedDatePicker;
+        private System.Windows.Forms.Button button6;
     }
 }
 

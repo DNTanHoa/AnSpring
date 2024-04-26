@@ -12,6 +12,7 @@ using AnSpring.eInvoiceLib.Models.Commons;
 using AnSpring.eInvoiceLib.Models.Responses;
 using AnSpring.eInvoiceLib.Lib;
 using System.IO;
+using AnSpring.eInvoiceLib.Helper;
 
 namespace AnSpring.InvoiceForm
 {
@@ -49,6 +50,7 @@ namespace AnSpring.InvoiceForm
                         AdjustmentType = "1",
                         PaymentStatus = true,
                         CusGetInvoiceRight = true,
+                        InvoiceIssuedDate = DateTimeHelper.GetMiliSecond(DateTime.UtcNow).ToString(),
                         TransactionUuid = Guid.NewGuid().ToString(),
                     },
                     SellerInfo = new SellerInfo()
@@ -225,7 +227,46 @@ namespace AnSpring.InvoiceForm
         /// <param name="e"></param>
         private void button5_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Lấy giá trị cấu hình
+                string passWord = ConfigurationManager.AppSettings["UserPass"].ToString();
+                string userName = ConfigurationManager.AppSettings["CodeTax"].ToString();
+                string apiLink = ConfigurationManager.AppSettings["APILink"].ToString()
+                    + @"/InvoiceAPI/InvoiceWS/cancelTransactionInvoice";
 
+                // Khai báo đối tượng hủy hóa đơn
+                CancelInvoiceRequest request = new CancelInvoiceRequest()
+                {
+                    SupplierTaxCode = userName,
+                    StrIssueDate = DateTimeHelper.GetMiliSecond(issuedDatePicker.Value.ToUniversalTime()),
+                    AdditionalReferenceDate = DateTimeHelper.GetMiliSecond(DateTime.Today),
+                    AdditionalReferenceDesc = "TEST",
+                    InvoiceNo = txtInvoiceNo.Text,
+                    TemplateCode = txtTemplateCode.Text,
+                    ReasonDelete = "TEST"
+                };
+
+                (bool result, string errorCode, string message, CancelInvoiceRespone responseData)
+                    = InvoiceClient.CancelInvoice(apiLink, userName, passWord, request);
+
+                if(result)
+                {
+                    MessageBox.Show($"Hủy thành công", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Có lỗi xảy ra: Mã lỗi {errorCode} - Nội dung: {message}", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Có lỗi xảy ra: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -286,6 +327,53 @@ namespace AnSpring.InvoiceForm
             }
         }
 
+        /// <summary>
+        /// Tra cứu hóa đơn
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Lấy giá trị cấu hình
+                string passWord = ConfigurationManager.AppSettings["UserPass"].ToString();
+                string userName = ConfigurationManager.AppSettings["CodeTax"].ToString();
+                string apiLink = ConfigurationManager.AppSettings["APILink"].ToString()
+                    + @"/InvoiceAPI/InvoiceUtilsWS/getInvoices/" + userName;
+
+                // Khai báo đối tượng lookup
+                LookupInvoiceRequest request = new LookupInvoiceRequest()
+                {
+                    StartDate = DateTime.Today.AddDays(-2),
+                    EndDate = DateTime.Today.AddDays(1),
+                    PageNum = 1,
+                    RowPerPage = 50,
+                    TemplateCode = null,
+                    InvoiceType = null
+                };
+
+                (bool result, string errorCode, string message, int totalRows, List<LookupInvoiceResponse> responseData)
+                    = InvoiceClient.LookupInvoices(apiLink, userName, passWord, request);
+
+                if(result)
+                {
+                    MessageBox.Show($"Thành công: Tổng số hóa đơn {totalRows}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Có lỗi xảy ra: {message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Có lỗi xảy ra: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         #region Support
         static string GetUniqueFileName(string directoryPath, string fileName)
         {
@@ -302,5 +390,7 @@ namespace AnSpring.InvoiceForm
             return newFileName;
         }
         #endregion
+
+        
     }
 }

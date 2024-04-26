@@ -186,16 +186,151 @@ namespace AnSpring.eInvoiceLib.Lib
         /// <summary>
         /// Hàm hủy hóa đơn
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="userName"></param>
-        /// <param name="passWord"></param>
-        /// <param name="requestData"></param>
-        /// <returns></returns>
+        /// <param name="url">Địa chỉ toàn vẹn API</param>
+        /// <param name="userName">Mã số thuế</param>
+        /// <param name="passWord">Mật khẩu</param>
+        /// <param name="requestData">Request hủy hóa đơn</param>
+        /// <returns>
+        /// bool: Tích hợp thành công hay thất bại
+        /// string: Mã lỗi
+        /// string: Mô tả lỗi
+        /// CancelInvoiceRespone: Kết quả hủy hóa đơn
+        /// </returns>
         public static (bool, string, string, CancelInvoiceRespone) CancelInvoice(
             string url, string userName, string passWord, CancelInvoiceRequest requestData)
         {
+            bool result = false;
+            string errorCode = string.Empty, message = string.Empty;
+            CancelInvoiceRespone responseData = new CancelInvoiceRespone();
 
+            using(HttpClient client = new HttpClient())
+            {
+                string basic = CreateBasicAuthHeader(userName, passWord);
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Add("Authorization", basic);
+
+                // Tạo HttpRequestMessage với phương thức POST và dữ liệu Form
+                var formData = new Dictionary<string, string>
+                {
+                    { "supplierTaxCode", requestData.SupplierTaxCode },
+                    { "invoiceNo", requestData.InvoiceNo },
+                    { "templateCode", requestData.TemplateCode },
+                    { "strIssueDate", requestData.StrIssueDate.ToString() },
+                    { "additionalReferenceDesc", requestData.AdditionalReferenceDesc },
+                    { "additionalReferenceDate", requestData.AdditionalReferenceDate.ToString() },
+                    { "reasonDelete", requestData.ReasonDelete }
+                };
+
+                var formContent = new FormUrlEncodedContent(formData);
+
+                // Gửi yêu cầu và nhận phản hồi
+                var response = client.PostAsync(url, formContent).Result;
+
+                // Đọc nội dung của phản hồi
+                string responseContent = response.Content.ReadAsStringAsync().Result;
+
+                // Phân tích phản hồi JSON
+                dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+                // Xử lý phản hồi
+                if ( response.IsSuccessStatusCode)
+                {
+                    errorCode = responseObject.code;
+                    message = responseObject.message;
+                    result = true;
+                }
+                else
+                {
+                    // Xử lý phản hồi lỗi
+                    errorCode = responseObject.code;
+                    message = responseObject.message;
+                }
+            }
+
+            return (result, errorCode , message, responseData);
         }
+
+        /// <summary>
+        /// Tra cứu dữ liệu hóa đơn phân trang
+        /// </summary>
+        /// <param name="url">Địa chỉ toàn vẹn API</param>
+        /// <param name="userName">Mã số thuế</param>
+        /// <param name="passWord">Mật khẩu</param>
+        /// <param name="requestData">Request tra cứu hóa đơn</param>
+        /// <returns>
+        /// bool: Tích hợp thành công hay thất bại
+        /// string: Mã lỗi
+        /// string: Mô tả lỗi
+        /// LookupInvoiceResponse: Dữ liệu hóa đơn
+        /// </returns>
+        public static (bool, string, string, int, List<LookupInvoiceResponse>) LookupInvoices(
+            string url, string userName, string passWord, LookupInvoiceRequest requestData)
+        {
+            bool result = false;
+            string errorCode = string.Empty, message = string.Empty;
+            int totalRows = 0;
+            List<LookupInvoiceResponse> responseData = new List<LookupInvoiceResponse>();
+
+            using (var client = new HttpClient()) 
+            {
+                string basic = CreateBasicAuthHeader(userName, passWord);
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Add("Authorization", basic);
+
+                // Serialize đối tượng thành chuỗi JSON
+                string jsonData = JsonConvert.SerializeObject(requestData, new JsonSerializerSettings
+                {
+                    ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+                });
+
+                // Tạo HttpRequestMessage với phương thức POST và dữ liệu JSON
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, url);
+                requestMessage.Content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                // Gửi yêu cầu và nhận phản hồi
+                HttpResponseMessage response = client.SendAsync(requestMessage).Result;
+
+                // Xử lý phản hồi
+                if (response.IsSuccessStatusCode)
+                {
+                    // Đọc nội dung của phản hồi
+                    string responseContent = response.Content.ReadAsStringAsync().Result;
+
+                    // Phân tích phản hồi JSON
+                    dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+                    // Xử lý phản hồi thành công
+                    totalRows = responseObject.totalRows;
+
+                    responseData = JsonConvert.DeserializeObject<List<LookupInvoiceResponse>>(responseObject.invoices.ToString());
+
+                    // Gán kết quả xử lý là true
+                    result = true;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    // Đọc nội dung của phản hồi
+                    string responseContent = response.Content.ReadAsStringAsync().Result;
+
+                    // Phân tích phản hồi JSON
+                    dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+
+                    // Xử lý phản hồi lỗi
+                    errorCode = responseObject.code;
+                    message = responseObject.message;
+                }
+                else
+                {
+                    result = false;
+                    errorCode = response.StatusCode.ToString();
+                }
+            }
+
+            return (result, errorCode, message, totalRows, responseData);
+        }
+
+
 
         #region support
         static string CreateBasicAuthHeader(string username, string password)
