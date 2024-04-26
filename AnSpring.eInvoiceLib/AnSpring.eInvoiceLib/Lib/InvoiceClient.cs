@@ -330,8 +330,72 @@ namespace AnSpring.eInvoiceLib.Lib
             return (result, errorCode, message, totalRows, responseData);
         }
 
+        /// <summary>
+        /// Hàm phát hành hóa đơn bản nháp
+        /// </summary>
+        /// <param name="url">Địa chỉ toàn vẹn API</param>
+        /// <param name="userName">Mã số thuế</param>
+        /// <param name="password">Mật khẩu</param>
+        /// <param name="requestData">Request xuất hóa đơn</param>
+        /// <returns>
+        /// bool: Tích hợp thành công hay thất bại
+        /// string: Mã lỗi
+        /// string: Mô tả lỗi
+        /// CreateInvoiceResponse: Kết quả nhận được trong trường hợp thành công
+        /// </returns>
+        public static bool CreateDrafInvoice(string url, string userName, string passWord, CreateInvoiceRequest requestData,
+            out string errorCode, out string message, out CreateInvoiceResponse responseData)
+        {
+            bool result = false;
+            errorCode = string.Empty;
+            message = string.Empty;
+            responseData = new CreateInvoiceResponse();
 
+            using (var client = new HttpClient())
+            {
+                string basic = CreateBasicAuthHeader(userName, passWord);
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Add("Authorization", basic);
 
+                // Serialize đối tượng thành chuỗi JSON
+                string jsonData = JsonConvert.SerializeObject(requestData, new JsonSerializerSettings
+                {
+                    ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+                });
+
+                // Tạo HttpRequestMessage với phương thức POST và dữ liệu JSON
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, url);
+                requestMessage.Content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                // Gửi yêu cầu và nhận phản hồi
+                HttpResponseMessage response = client.SendAsync(requestMessage).Result;
+
+                // Xử lý phản hồi
+                if (response.IsSuccessStatusCode)
+                {
+                    // Gán kết quả xử lý là true
+                    result = true;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    // Đọc nội dung của phản hồi
+                    string responseContent = response.Content.ReadAsStringAsync().Result;
+                    // Phân tích phản hồi JSON
+                    dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+                    // Xử lý phản hồi lỗi
+                    errorCode = responseObject.code;
+                    message = responseObject.message;
+                }
+                else
+                {
+                    result = false;
+                    errorCode = response.StatusCode.ToString();
+                }
+            }
+
+            return result;
+        }
         #region support
         static string CreateBasicAuthHeader(string username, string password)
         {

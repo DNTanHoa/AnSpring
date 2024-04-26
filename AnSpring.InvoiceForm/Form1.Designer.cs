@@ -36,6 +36,8 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.issuedDatePicker = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.txtDirectory = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,9 +47,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtInvoiceNo = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.issuedDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -85,6 +86,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.button5);
             this.groupBox1.Controls.Add(this.button4);
@@ -145,6 +147,25 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tải về";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(28, 126);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(67, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Issued Date:";
+            // 
+            // issuedDatePicker
+            // 
+            this.issuedDatePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.issuedDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.issuedDatePicker.Location = new System.Drawing.Point(101, 120);
+            this.issuedDatePicker.MinDate = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            this.issuedDatePicker.Name = "issuedDatePicker";
+            this.issuedDatePicker.Size = new System.Drawing.Size(210, 20);
+            this.issuedDatePicker.TabIndex = 12;
             // 
             // label4
             // 
@@ -220,25 +241,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Tra Cứu";
             // 
-            // issuedDatePicker
-            // 
-            this.issuedDatePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
-            this.issuedDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.issuedDatePicker.Location = new System.Drawing.Point(101, 120);
-            this.issuedDatePicker.MinDate = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-            this.issuedDatePicker.Name = "issuedDatePicker";
-            this.issuedDatePicker.Size = new System.Drawing.Size(210, 20);
-            this.issuedDatePicker.TabIndex = 12;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(28, 126);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 13);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Issued Date:";
-            // 
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(214, 19);
@@ -248,6 +250,16 @@
             this.button6.Text = "Lookup Invoice";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(115, 54);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(93, 25);
+            this.button8.TabIndex = 4;
+            this.button8.Text = "Draft Invoice";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // Form1
             // 
@@ -289,6 +301,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker issuedDatePicker;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button8;
     }
 }
 
